@@ -1,14 +1,16 @@
+#!/usr/bin/node
 import express from 'express';
-import routes from './routes';
+import injectRoutes from './routes';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-// parse JSON request bodies
-app.use(express.json());
-// load routes
-app.use('/', routes);
+injectRoutes(app);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use(express.json({ limit: '200mb' }));
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
+
+export default app;
